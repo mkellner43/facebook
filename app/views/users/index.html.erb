@@ -1,0 +1,23 @@
+<h1>HOME<h2>
+<% @users.each do | user | %>
+  <% unless user.id == current_user.id %>
+    <%= user.email %><br/><br>
+    <%= button_to "Add Friend", new_request_path(user), method: :get %>
+  <% end %>
+<% end %><br/><br/>
+  <p>These are people you asked to be your friend:</p>
+    <% @my_requests.each do |my_requests| %>
+    <%= my_requests.inspect %> <br/><br/>
+    <% end %>
+  <p>These people requested to be your friend:</p><% @requests.each do |request| %>
+  <%= User.find(request.user_id).email %>
+  <div>
+    <%= button_to "accept", accept_request_path(request) %>
+    <%= button_to "deny", delete_request_path(request) %>
+  </div>
+  <% end %>
+  <p>Here is your friends list (accepted request):</p>
+    <% @friends_list.each do |friend| %>
+      <%= friend.inspect %> <br/><br/>
+      <%= button_to "delete friend", delete_request_path(friend) %>
+      <% end %>
