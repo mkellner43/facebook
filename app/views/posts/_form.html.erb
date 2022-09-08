@@ -1,0 +1,8 @@
+<div class="container mb-4">
+  <%= form_with model: @post do | f | %>
+    <div class="d-flex flex-column align-items-center">
+      <%= f.text_area :body, class:"form-control", style:"width: 25rem" %>
+      <%= f.submit "Post!", class:"btn btn-primary mt-2", style: "width: 18rem"%>
+    </div>
+  <% end %>
+ </div>

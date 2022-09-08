@@ -1,0 +1,22 @@
+<h1 class="mt-2 mb-2">Friends List</h1>
+<div class="d-flex mb-4">
+  <% @friends_list.each do |friend| %>
+    <%= friend.inspect %> <br/><br/>
+    <%= button_to "delete friend", delete_request_path(friend) %>
+  <% end %>
+</div>
+
+<h1>Pending Requests</h1>
+<% @my_requests.each do |my_requests| %>
+    <%= my_requests.inspect %> <br/><br/>
+  <% end %>
+
+<h1>Add Friends</h1>
+<% @users.each do | user | %>
+  <% unless user.id == current_user.id or Friendship.current_friends(user.id) %>
+    <%= user.email %><br/><br>
+    <%= button_to "Add Friend", new_request_path(user), method: :get %>
+    <%= @friends_list.include?(friend_id: user.id) %>
+  <% end %>
+<% end %><br/><br/>
+

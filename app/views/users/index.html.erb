@@ -1,23 +1,32 @@
-<h1>HOME<h2>
-<% @users.each do | user | %>
-  <% unless user.id == current_user.id %>
-    <%= user.email %><br/><br>
-    <%= button_to "Add Friend", new_request_path(user), method: :get %>
-  <% end %>
-<% end %><br/><br/>
-  <p>These are people you asked to be your friend:</p>
-    <% @my_requests.each do |my_requests| %>
-    <%= my_requests.inspect %> <br/><br/>
-    <% end %>
-  <p>These people requested to be your friend:</p><% @requests.each do |request| %>
-  <%= User.find(request.user_id).email %>
-  <div>
-    <%= button_to "accept", accept_request_path(request) %>
-    <%= button_to "deny", delete_request_path(request) %>
-  </div>
-  <% end %>
-  <p>Here is your friends list (accepted request):</p>
-    <% @friends_list.each do |friend| %>
-      <%= friend.inspect %> <br/><br/>
-      <%= button_to "delete friend", delete_request_path(friend) %>
+<div class="mt-5">
+  <%= render 'posts/form'%>
+  <div class='d-flex flex-column align-items-center mb-2'>
+    <% if @posts %>
+      <% @posts.each do | post | %>
+      <div class="card mb-2 shadow" >
+        <h2 class="card-header text-center p-2">
+        <%= post.user.email%>
+        </h2>
+        <h3 class="card-item text-center">
+        <%= post.body%>
+        </h3>
+        <div class="ms-2 mb-2">
+          <% already_liked = post.likes.find { | like | like.user_id == current_user.id } %>
+          <% if already_liked %>
+            <%= button_to post_like_path(post_id: post.id, id: already_liked.id), data: {turbo: false }, method: :delete, class:"btn btn-link text-decoration-none" do %>
+              <i class="bi bi-hand-thumbs-up-fill text-blue"></i>
+              <%= post.likes.count unless post.likes.count == 0 %>
+            <% end %>
+          <% else %>
+            <%= button_to post_likes_path(post), method: :post, class:"btn btn-link text-decoration-none" do %>
+              <i class="bi bi-hand-thumbs-up text-black"></i>
+              <%= post.likes.count unless post.likes.count == 0 %>
+            <% end %>
+          <% end %>
+        </div>
+
+      </div>
       <% end %>
+    <% end %>
+  </div>
+</div>

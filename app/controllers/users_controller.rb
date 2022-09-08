@@ -2,8 +2,13 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @my_requests = Friendship.my_friend_requests(current_user.id)
-    @requests = Friendship.friend_requests(current_user.id)
     @friends_list = Friendship.current_friends(current_user.id)
+    @posts = Post.all.order("created_at DESC")
+    @post = Post.new
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   def friend_request
@@ -35,9 +40,4 @@ class UsersController < ApplicationController
       redirect_to root_path, notice: "Something went wrong:( "
     end 
   end
-
-  def notifications
-    @notifications = Friendship.friend_requests(current_user.id)
-  end
-
 end
