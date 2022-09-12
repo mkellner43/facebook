@@ -9,12 +9,12 @@
               <h4 class="card-header text-center text-white p-2 bg-primary">
                 <%= post.user.email%>
               </h4>
-              <h5 class="card-item text-center">
                 <% if current_user.posts.include?(post) %>
-                  <%= link_to edit_post_path(post), class:"text-decoration-none d-flex justify-content-start ms-3 mt-2" do %>
+                <span><%= link_to edit_post_path(post), class:"text-decoration-none d-flex justify-content-start ms-3 mt-2" do %>
                     <i class="bi bi-pencil-square text-black"></i>
-                  <% end %>
+                  <% end %></span>
                 <% end %>
+              <h5 class="card-item text-center">
                 <%= post.body%>
               </h5>
               <div class="mb-2">

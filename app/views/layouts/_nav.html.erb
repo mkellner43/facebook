@@ -8,7 +8,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <% if current_user %>
         <li class="nav-item">
-          <%= link_to "Profile", user_path(current_user), class:"nav-link active" %>
+          <%= link_to "Profile", users_path, class:"nav-link active" %>
         </li>
         <li class="nav-item">
           <%= link_to "Friends", friendship_path, class:"nav-link active"%>
@@ -16,8 +16,10 @@
         <li class="nav-item dropdown">
             <div class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Notifications
+              <% unless @requests.count == 0 %>
                 <span class="badge text-bg-secondary ms-2">
-                <%= @requests.count if @requests %></span>
+                <%= @requests.count %></span>
+                <% end %>
                 </div>
           <ul class="dropdown-menu">
                 <% if @requests %>
