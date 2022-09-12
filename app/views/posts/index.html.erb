@@ -1,1 +1,57 @@
-<h1>index</h1>
+<div class="mt-5">
+  <%= render 'posts/form'%>
+  <div class='d-flex flex-column align-items-center'>
+    <% if @posts %>
+      <% @posts.each do | post | %>
+        <% if post.user == current_user or current_user.friendships.current_friends(post.user) %>
+              <%# post section %>
+            <div class="card mb-2 shadow" style="width: 25rem" >
+              <h4 class="card-header text-center text-white p-2 bg-primary">
+                <%= post.user.email%>
+              </h4>
+              <h5 class="card-item text-center">
+                <% if current_user.posts.include?(post) %>
+                  <%= link_to edit_post_path(post), class:"text-decoration-none d-flex justify-content-start ms-3 mt-2" do %>
+                    <i class="bi bi-pencil-square text-black"></i>
+                  <% end %>
+                <% end %>
+                <%= post.body%>
+              </h5>
+              <div class="mb-2">
+                <% already_liked = post.likes.find { | like | like.user_id == current_user.id } %>
+                  <% if already_liked %>
+                    <%= button_to post_like_path(post_id: post.id, id: already_liked.id), data: {turbo: false }, method: :delete, class:"btn btn-link btn-md text-decoration-none" do %>
+                      <i class="bi bi-hand-thumbs-up-fill text-blue"></i>
+                      <%= post.likes.count unless post.likes.count == 0 %>
+                    <% end %>
+                    <% else %>
+                    <%= button_to post_likes_path(post), method: :post, class:"btn btn-link text-decoration-none" do %>
+                      <i class="bi bi-hand-thumbs-up text-black"></i>
+                      <%= post.likes.count unless post.likes.count == 0 %>
+                    <% end %>
+                  <% end %>
+                  <%# comment section %>
+                <div class="d-flex flex-column align-items-center">
+                  <%= form_with model: [post, Comment.new] do | f | %>
+                    <%= f.hidden_field :user_id, value: current_user.id %>
+                    <%= f.text_field :body, class:"form-control", style:"width: 24rem" %>
+                    <%= f.submit "Comment!", class:"btn btn-primary btn-sm mt-1 mb-3" %>
+                  <% end %>
+                  <% post.comments.all.each do |comment| %>
+                    <div class="card text-center mb-2" style="width: 24rem">
+                      <h5 class="card-header text-white bg-primary d-flex justify-content-center align-items-center" style="height: 2rem">
+                        <%= comment.user.email %>
+                      </h5>
+                      <p class="card-item d-flex justify-content-center align-items-center mb-0 p-2">
+                        <%= comment.body %>
+                      </p>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

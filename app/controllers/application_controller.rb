@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :notifications
   
   def notifications
-    @requests = Friendship.friend_requests(current_user.id)
+    @requests = FriendRequest.my_friend_requests(current_user) if current_user
   end
 end

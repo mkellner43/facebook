@@ -1,7 +1,11 @@
 class PostsController < ApplicationController
 
   def index
-    @post = Post.all
+    @post = Post.new
+    @users = User.all
+    @posts = Post.all.order("created_at DESC")
+    @comments = Comment.all.order("created_at DESC")
+    @my_requests = FriendRequest.my_friend_requests(current_user)
   end
 
   def new

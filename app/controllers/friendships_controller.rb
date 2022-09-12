@@ -1,9 +1,10 @@
 class FriendshipsController < ApplicationController
 
   def index
-    @friends_list = Friendship.current_friends(current_user.id)
+    @friends_list = current_user.friendships
     @users = User.all
-    @my_requests = Friendship.my_friend_requests(current_user.id)
+    @requests = FriendRequest.my_friend_requests(current_user)
+    @my_requests = FriendRequest.friend_requests(current_user)
   end
 
 end
