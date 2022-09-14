@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  after_create :send_admin_mail
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -18,4 +20,9 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
     end
   end
+
+  def send_admin_mail
+    UserMailer.with(user: self).welcome_email.deliver
+  end
+
 end

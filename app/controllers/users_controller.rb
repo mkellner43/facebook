@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  
   def index
     @users = User.all
     @profile = Profile.where("user_id = ?", current_user.id)
@@ -14,4 +14,5 @@ class UsersController < ApplicationController
     @posts = @user.posts.order("created_at DESC")
     @post = @user.posts.build
   end
+
 end
