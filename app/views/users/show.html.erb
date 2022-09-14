@@ -1,1 +1,87 @@
-<h1>Profile</h1>
+<div class="d-flex p-5">
+  <% if current_user.profile %>
+    <div class="d-inline-flex flex-column align-items-center", style="width: 20%">
+      <h1 class="d-inline-flex">
+        <%= current_user.profile.first_name %>
+        <%= current_user.profile.last_name %>
+      </h1>
+      <div>
+        <% if current_user.profile.avatar.attached? %>
+            <%= image_tag current_user.profile.avatar.variant(resize_to_fill: [120, nil]), class:"rounded" %>
+          <% else %>
+            <%= image_tag user_gravatar(@user), class:"rounded" %>
+        <% end %>
+      </div>
+      <p class="p-2">
+        <b>Date Of Birth: </b><%= current_user.profile.dob.to_formatted_s(:long_ordinal) %>
+      </p>
+      <p class="p-2">
+        <b>Address: </b><%= current_user.profile.address %>
+      </p>
+    </div>
+  <% else %>
+    <div class="m-4" style="width: 17.37%">
+      <%= link_to "Set up your profile", new_profile_path, class:'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <div class="d-inline-flex flex-column align-items-center justify-content-center", style="width: 60%">
+    <%= render 'posts/form' %>
+    <% if @posts.exists? %>
+      <div class="card", style="width: 35%">
+
+        <% @posts.each do | post | %>
+
+          <p class="card-header mb-2 text-center bg-primary text-white">
+            <%= post.user.email %>
+          </p>
+          
+          <% if current_user.posts.include?(post) %> 
+            <%= link_to edit_post_path(post), class:"text-decoration-none" do %>
+              <span class="bi bi-pencil-square text-black ps-2"></span>
+            <% end %>
+          <% end %>
+          <p class="card-item p-3 text-center">
+            <%= post.body %>
+          </p>
+
+          <% already_liked = post.likes.find { | like | like.user_id == current_user.id } %> 
+          <% if already_liked %>
+            <%= button_to post_like_path(post_id: post.id, id: already_liked.id), data: {turbo: false }, method: :delete, class:"btn btn-link btn-md text-decoration-none p-0 ps-2 pb-2" do %>
+              <span class="bi bi-hand-thumbs-up-fill">
+                <%= post.likes.count unless post.likes.count == 0 %>
+              </span>
+            <% end %>
+            <% else %>
+            <%= button_to post_likes_path(post), method: :post, class:"btn btn-link text-decoration-none p-0 ps-2 pb-2" do %> 
+              <span class="bi bi-hand-thumbs-up text-black">
+                <%= post.likes.count unless post.likes.count == 0 %>
+              </span>
+            <% end %>
+          <% end %>
+          
+          <div class='d-flex flex-column align-items-center'>
+            <%= form_with model: [post, Comment.new] do | f | %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+              <%= f.text_field :body, class:"form-control", style:"width: 24rem" %>
+              <%= f.submit "Comment!", class:"btn btn-primary btn-sm mt-1 mb-3" %>
+            <% end %>
+          </div>
+          <% if post.comments.exists? %>
+            <b class="bg-primary text-center text-white rounded">Comments</b>
+            <% post.comments.order("created_at DESC").each do | comment | %>
+              <div class="card rounded m-2">
+                <div class='card-title text-center bg-primary rounded text-white'>
+                  <%= comment.user.email %>
+                </div>
+                <p class='text-center'>
+                  <%= comment.body %>
+                </p>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

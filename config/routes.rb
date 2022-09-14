@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {omniauth_callbacks: 'omniauth'}
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'posts#index'
   resources :users
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'friend_request/:id', to: 'friend_requests#friend_request', as: 'new_request'
   post 'accept_friend_request/:id', to: 'friend_requests#accept_friend_request', as: 'accept_request'
   post 'delete_friend_request/:id', to: 'friend_requests#delete_friend_request', as: 'delete_request'
-  get 'friendship', to: 'friendships#index'
+  get 'friendship', to: 'users#index'
   # Defines the root path route ("/")
   # root "articles#index"
 end

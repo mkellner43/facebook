@@ -6,7 +6,7 @@ class ProfilesController < ApplicationController
 
   def create
     if current_user.create_profile(profile_params)
-      redirect_to profiles_path(current_user), notice: "Profile created!"
+      redirect_to user_path(current_user), notice: "Profile created!"
     else
       redirect_to root_path, alert: "Something went wrong:("
     end
@@ -28,6 +28,6 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :dob, :address)
+    params.require(:profile).permit(:avatar, :first_name, :last_name, :dob, :address)
   end
 end

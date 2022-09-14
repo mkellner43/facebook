@@ -19,7 +19,7 @@ class FriendRequestsController < ApplicationController
   end
 
   def delete_friend_request
-    @friend_request = Friendship.find(params[:id])
+    @friend_request = FriendRequest.find(params[:id])
     if @friend_request
       @friend_request.destroy
       redirect_to root_path, notice: "Not your friend!"

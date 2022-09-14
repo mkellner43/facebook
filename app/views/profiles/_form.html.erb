@@ -1,12 +1,21 @@
-<div class="container mb-4">
+<div class="container d-flex flex-column align-items-center justify-content-center">
   <%= form_with model: @profile do | f | %>
-    <div class="d-flex flex-column align-items-center">
-      <%= f.text_field :first_name, placeholder: "First Name", class:"form-control mb-2", style:"width: 30rem" %>
-      <%= f.text_field :last_name, placeholder: "Last Name", class:"form-control mb-2", style:"width: 30rem" %>
-      <%= f.date_field :dob, class:"form-control mb-2", style:"width: 30rem", data_provide:"datepicker" %>
-      <%= f.text_field :address, placeholder: "Address", class:"form-control mb-2", style:"width: 30rem" %>
-      
-      <%= f.submit "Submit", class:"btn btn-primary btn-sm mt-2", style: "width: 18rem"%>
-    </div>
+
+      <%= f.label :avatar, class: "form-label"%>
+      <%= f.file_field :avatar, class:"form-control mb-2" %>
+
+      <%= f.label :first_name, "First Name", class: "form-label"%>
+      <%= f.text_field :first_name, placeholder: "First Name", class:"form-control mb-2" %>
+
+      <%= f.label :last_name, "Last Name", class: "form-label"%>
+      <%= f.text_field :last_name, placeholder: "Last Name", class:"form-control mb-2" %>
+
+      <%= f.label :dob, "Date Of Birth",class: "form-label"%>
+      <%= f.date_field :dob, class:"form-control mb-2" %>
+
+      <%= f.label :address, class: "form-label"%>
+      <%= f.text_field :address, placeholder: "Address", class:"form-control mb-4" %>
+
+      <%= f.submit "Submit", class:"btn btn-primary btn-sm form-control"%>
   <% end %>
  </div>
