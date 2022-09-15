@@ -23,7 +23,6 @@ class User < ApplicationRecord
 
   def send_admin_mail
     UserMailer.with(user: self).welcome_email.deliver_later
-    redirect_to rooth_path, notice: "Welcome!"
   end
 
 end
