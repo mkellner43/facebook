@@ -10,7 +10,7 @@ module Facebook
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-    config.action_mailer.default_url_options = { host: 'example.com' }
+    config.action_mailer.default_url_options = { host: 'https://sleepy-mountain-79076.herokuapp.com' }
 
     # Configuration for the application, engines, and railties goes here.
     #
