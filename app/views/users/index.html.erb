@@ -19,7 +19,6 @@
     <h1>Add Friends</h1>
     <% @users.each do | potential_friend | %>
       <% unless potential_friend.id == current_user.id or current_user.friendships.current_friends(potential_friend).exists? or FriendRequest.my_friend_requests(potential_friend).exists? or FriendRequest.my_friend_requests(potential_friend).exists? %>
-        <%= @friends_list.include?(potential_friend) %>
         <%= potential_friend.email %><br/><br>
         <%= button_to "Add Friend", new_request_path(potential_friend), method: :get %>
       <% end %>
