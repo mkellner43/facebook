@@ -7,7 +7,7 @@
       </h1>
       <div>
         <% if current_user.profile.avatar.attached? %>
-            <%= image_tag current_user.profile.avatar.variant(resize_to_fill: [120, nil]), class:"rounded" %>
+            <%= image_tag current_user.profile.avatar, class:"rounded" %>
           <% else %>
             <%= image_tag user_gravatar(@user), class:"rounded" %>
         <% end %>
