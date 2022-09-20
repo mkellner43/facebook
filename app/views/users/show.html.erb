@@ -1,13 +1,14 @@
 <div class="d-flex p-5">
+  <%# profile section  %>
   <% if current_user.profile %>
-    <div class="d-inline-flex flex-column align-items-center", style="width: 20%">
-      <h1 class="d-inline-flex">
+    <div class="d-flex flex-column align-items-center justify-content-start">
+      <h1 class="d-inline-flex mb-2">
         <%= current_user.profile.first_name %>
         <%= current_user.profile.last_name %>
       </h1>
       <div>
         <% if current_user.profile.avatar.attached? %>
-            <%= image_tag current_user.profile.avatar.variant(resize_to_fill: [150, nil], saver: { quality: 100 }), class: 'rounded' %>
+            <%= image_tag current_user.profile.avatar.variant(resize_to_fill: [150, nil], saver: { quality: 100 }), class: 'rounded mb-2' %>
           <% else %>
             <%= image_tag user_gravatar(@user), class:"rounded" %>
         <% end %>
@@ -18,32 +19,52 @@
       <p class="p-2">
         <b>Address: </b><%= current_user.profile.address %>
       </p>
+      <div>
+        <%= link_to "Edit profile", edit_profile_path(current_user.profile), class:'btn btn-primary' %>
+      </div>
     </div>
+
   <% else %>
-    <div class="m-4" style="width: 17.37%">
+    <div class="m-4" style="width: 17.37%, min-width: ">
       <%= link_to "Set up your profile", new_profile_path, class:'btn btn-primary' %>
     </div>
   <% end %>
 
-  <div class="d-inline-flex flex-column align-items-center justify-content-center", style="width: 60%">
-    <%= render 'posts/form' %>
+  <%# post section %>
+
+  <div class="d-flex flex-column align-items-center justify-content-center", style="width: 70%">
+    <div class='mb-2' style='width: 35%'>
+      <%= render 'posts/form' %>
+    </div>
     <% if @posts.exists? %>
-      <div class="card", style="width: 35%">
+      
 
-        <% @posts.each do | post | %>
-
-          <p class="card-header mb-2 text-center bg-primary text-white">
-            <%= post.user.email %>
-          </p>
+      <% @posts.each do | post | %>
+        <div class="card mb-2 shadow", style="width: 60%">
+        <p class="card-header text-center text-white bg-primary">
+          <% if post.user.profile and post.user.profile.avatar.attached? %>
+              <%= image_tag post.user.profile.avatar.variant(resize_to_fill: [50, 50], saver: { quality: 100 }).processed, class:"rounded" %>
+            <% else %>
+              <%= image_tag user_gravatar(post.user), class:"rounded" %>
+          <% end %>
+            <%= post.user.email%>
+        </p>
           
           <% if current_user.posts.include?(post) %> 
             <%= link_to edit_post_path(post), class:"text-decoration-none" do %>
               <span class="bi bi-pencil-square text-black ps-2"></span>
             <% end %>
           <% end %>
-          <p class="card-item p-3 text-center">
-            <%= post.body %>
-          </p>
+          <div class="card-item p-3 text-center">
+          <% if post.image.attached? %>
+            <div>
+              <%= image_tag post.image.variant(resize_to_fill: [350, nil], saver: { quality: 100 }), class: 'rounded mb-2' %>
+            </div>
+          <% end %>
+            <div>
+              <%= post.body%>
+            </div>
+          </div>
 
           <% already_liked = post.likes.find { | like | like.user_id == current_user.id } %> 
           <% if already_liked %>
@@ -60,18 +81,18 @@
             <% end %>
           <% end %>
           
+          <%# comment section %>
           <div class='d-flex flex-column align-items-center'>
             <%= form_with model: [post, Comment.new] do | f | %>
               <%= f.hidden_field :user_id, value: current_user.id %>
-              <%= f.text_field :body, class:"form-control", style:"width: 24rem" %>
-              <%= f.submit "Comment!", class:"btn btn-primary btn-sm mt-1 mb-3" %>
+              <%= f.text_field :body, class:"form-control", style:"width: 100%" %>
+              <%= f.submit "Comment!", class:"btn btn-primary btn-sm mt-1 mb-3", style:"width: 100%" %>
             <% end %>
           </div>
           <% if post.comments.exists? %>
-            <b class="bg-primary text-center text-white rounded">Comments</b>
             <% post.comments.order("created_at DESC").each do | comment | %>
               <div class="card rounded m-2">
-                <div class='card-title text-center bg-primary rounded text-white'>
+                <div class='card-title text-center bg-primary rounded-top text-white'>
                   <%= comment.user.email %>
                 </div>
                 <p class='text-center'>
@@ -80,8 +101,8 @@
               </div>
             <% end %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

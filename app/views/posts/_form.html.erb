@@ -1,9 +1,8 @@
-<div class="container mb-4">
 <h3 class='d-flex justify-content-center'>What's on your mind?</h3>
   <%= form_with model: @post do | f | %>
     <div class="d-flex flex-column align-items-center">
-      <%= f.text_area :body, class:"form-control", style:"width: 30rem" %>
-      <%= f.submit "Post!", class:"btn btn-primary btn-sm mt-2", style: "width: 18rem"%>
+      <%= f.text_area :body, class:"form-control", style:"width: 100%" %>
+      <%= f.file_field :image, class:"form-control", style:"width: 100%" %>
+      <%= f.submit "Post!", class:"btn btn-primary btn-sm mt-2", style: "width: 100%"%>
     </div>
   <% end %>
- </div>
