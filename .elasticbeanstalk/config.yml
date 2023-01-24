@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: facebook-dev
+    environment: fb-server
     group_suffix: null
 global:
   application_name: facebook
