@@ -17,7 +17,7 @@ global:
   workspace_type: Application
 packages:
   yum:
-    postgresql-devel: []
+    amazon-linux-extras: []
 commands:
   01_postgres_activate:
       command: sudo amazon-linux-extras enable postgresql10
