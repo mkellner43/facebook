@@ -1,9 +1,9 @@
 branch-defaults:
   master:
-    environment: facebook2
+    environment: null
     group_suffix: null
 global:
-  application_name: facebook2
+  application_name: facebook
   branch: null
   default_ec2_keyname: null
   default_platform: Ruby 3.0 running on 64bit Amazon Linux 2
