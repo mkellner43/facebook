@@ -1,11 +1,11 @@
 branch-defaults:
   master:
-    environment: fb-server
+    environment: fb-env
     group_suffix: null
 global:
-  application_name: facebook
+  application_name: fb
   branch: null
-  default_ec2_keyname: null
+  default_ec2_keyname: firstrailsec2
   default_platform: Ruby 3.0 running on 64bit Amazon Linux 2
   default_region: us-east-1
   include_git_submodules: true
