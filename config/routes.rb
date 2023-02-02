@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post 'accept_friend_request/:id', to: 'friend_requests#accept_friend_request', as: 'accept_request'
   post 'delete_friend_request/:id', to: 'friend_requests#delete_friend_request', as: 'delete_request'
   get 'friendship', to: 'users#index'
+
+  get 'api/posts', to: 'api#index'
   # Defines the root path route ("/")
   # root "articles#index"
 end

@@ -32,6 +32,10 @@
 sendgrid.env
 
 # Elastic Beanstalk Files
-# .elasticbeanstalk/*
-# !.elasticbeanstalk/*.cfg.yml
-# !.elasticbeanstalk/*.global.yml
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.elasticbeanstalk
+
+
+# YOU ARE ON NEW_FEATURES BRANCH! Goal is to make this a rails backend and make the front end react

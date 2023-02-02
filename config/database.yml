@@ -85,11 +85,17 @@ test:
 #   username: facebook
 #   password: <%= ENV["FACEBOOK_DATABASE_PASSWORD"] %>
 
+# production:
+#   adapter: pg
+#   encoding: utf8
+#   database: <%= ENV['RDS_DB_NAME'] %>
+#   username: <%= ENV['RDS_USERNAME'] %>
+#   password: <%= ENV['RDS_PASSWORD'] %>
+#   host: <%= ENV['RDS_HOSTNAME'] %>
+#   port: <%= ENV['RDS_PORT'] %>
+
 production:
-  adapter: pg
-  encoding: utf8
-  database: <%= ENV['RDS_DB_NAME'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  <<: *default
+  database: mysite_production
+  username: mysite
+  password: <%= ENV['DATABASE_URL'] %>
